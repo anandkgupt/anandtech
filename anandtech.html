@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AnandTech Digital Solutions — Web, App, AI & Growth Marketing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #0066cc;
+    --primary-light: #e6f0ff;
+    --accent: #ff6b35;
+    --accent-light: #ffe6d9;
+    --dark: #0a0e27;
+    --text: #1a1f3a;
+    --text-mute: #6b7280;
+    --bg: #f8fafc;
+    --bg2: #ffffff;
+    --border: #e2e8f0;
+    --nav-h: 70px;
+    --success: #10b981;
+    --warning: #f59e0b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    height: var(--nav-h);
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 5vw;
+    gap: 2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.3rem;
+    color: var(--dark); text-decoration: none;
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-logo span { color: var(--primary); }
+  .nav-links { display: flex; gap: 0; margin-left: auto; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-mute);
+    font-size: 0.85rem; font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-links a:hover { background: var(--primary-light); color: var(--primary); }
+  .nav-cta {
+    background: var(--primary) !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+  }
+  .nav-cta:hover { background: #0052a3 !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: calc(100vh - var(--nav-h));
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 5rem 5vw;
+    gap: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; top: -40%;
+    background: radial-gradient(ellipse 80% 80% at 100% 30%, rgba(0,102,204,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0; top: auto; bottom: -30%;
+    background: radial-gradient(ellipse 60% 60% at 0% 100%, rgba(255,107,53,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 0.75rem; font-weight: 600;
+    padding: 0.35rem 0.95rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .hero-tag::before { content: '●'; font-size: 0.5rem; }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--dark);
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--primary);
+  }
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--text-mute);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--primary);
+    color: #fff; border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary:hover { background: #0052a3; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-outline:hover { background: var(--primary-light); }
+
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .feature-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: all 0.3s;
+  }
+  .feature-box:hover {
+    border-color: var(--primary);
+    box-shadow: 0 8px 24px rgba(0,102,204,0.1);
+    transform: translateY(-4px);
+  }
+  .feature-box:nth-child(2) { margin-top: 32px; }
+  .feature-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+  }
+  .feature-box h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem; font-weight: 600; color: var(--text);
+  }
+  .feature-box p { font-size: 0.8rem; color: var(--text-mute); line-height: 1.5; }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 6rem 5vw; position: relative; }
+  .section-label {
+    font-size: 0.7rem; font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--dark);
+    line-height: 1.15;
+    max-width: 600px;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    font-size: 1rem; color: var(--text-mute);
+    font-weight: 300; max-width: 580px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  /* ── PILLARS ── */
+  .pillars-section { background: var(--bg2); }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .pillar-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .pillar-card:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0,102,204,0.12);
+  }
+  .pillar-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem; font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 0.8rem;
+    line-height: 1;
+  }
+  .pillar-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .pillar-card p { font-size: 0.85rem; color: var(--text-mute); line-height: 1.6; margin-bottom: 1.2rem; }
+  .service-list {
+    font-size: 0.8rem; color: var(--text-mute);
+    line-height: 1.7;
+  }
+  .service-list li { list-style: none; margin-bottom: 0.35rem; }
+  .service-list li::before { content: '▸ '; color: var(--primary); font-weight: 600; }
+
+  /* ── DETAILED SERVICES ── */
+  .detailed-services { background: var(--bg); }
+  .services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .service-group {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+  .service-group:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    border-color: var(--accent);
+  }
+  .service-group h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-light);
+  }
+  .service-group ul { list-style: none; }
+  .service-group li {
+    font-size: 0.85rem;
+    color: var(--text-mute);
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+  }
+  .service-group li:hover { color: var(--primary); }
+  .service-group li::before { content: '✓ '; color: var(--success); font-weight: 700; margin-right: 6px; }
+
+  /* ── TECH STACK ── */
+  .tech-section { background: linear-gradient(135deg, var(--dark) 0%, #1a1f3a 100%); color: #fff; }
+  .tech-section .section-title { color: #fff; }
+  .tech-section .section-desc { color: rgba(255,255,255,0.65); }
+  .tech-section .section-label { color: var(--primary-light); }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .tech-badge {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .tech-badge:hover {
+    background: rgba(0,102,204,0.2);
+    border-color: var(--primary);
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--primary) 0%, #004fa3 100%);
+    color: #fff;
+    text-align: center;
+    padding: 5rem 5vw;
+    border-radius: 16px;
+    margin: 6rem 5vw;
+  }
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem; font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .cta-section p {
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+  }
+  .cta-btn {
+    background: #fff;
+    color: var(--primary);
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .cta-btn:hover { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.5);
+    padding: 4rem 5vw 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr 1.5fr 1.5fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.35rem; font-weight: 800; color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .footer-brand h3 span { color: var(--primary); }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 300px; margin-bottom: 1.5rem; color: rgba(255,255,255,0.4); }
+  .social-row { display: flex; gap: 10px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.6); font-size: 0.8rem;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .social-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem; font-weight: 700; color: #fff;
+    margin-bottom: 1.2rem; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .footer-col a {
+    display: block; color: rgba(255,255,255,0.45);
+    text-decoration: none; font-size: 0.8rem;
+    margin-bottom: 0.65rem;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 3rem; min-height: auto; padding: 4rem 5vw; }
+    .hero-visual { display: none; }
+    .tech-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .cta-section { margin: 4rem 5vw; padding: 3rem 5vw; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero h1 { font-size: 2rem; }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+    .pillars-grid { grid-template-columns: 1fr; }
+    .services-container { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .tech-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.75rem; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content { animation: fadeInUp 0.7s ease both; }
+  .hero-visual { animation: fadeInUp 0.7s 0.2s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Anand<span>Tech</span></a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#tech">Technology</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="btn-primary nav-cta" style="padding:0.5rem 1.2rem;">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">Digital Innovation Platform</span>
+    <h1>Open Platform. <em>Digital Creativity</em></h1>
+    <p>End-to-end web development, AI-powered solutions, growth marketing, and creative design. We build the complete digital ecosystem for ambitious brands and startups.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+      <button class="btn-outline" onclick="alert('Let\'s talk about your project!')">Start a Project</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="feature-box">
+      <div class="feature-icon">🚀</div>
+      <h4>Digital Engineering</h4>
+      <p>Web, mobile apps, infrastructure & DevOps</p>
+    </div>
+    <div class="feature-box">
+      <div class="feature-icon">📊</div>
+      <h4>Growth Marketing</h4>
+      <p>SEO, paid ads, conversion optimization</p>
+    </div>
+    <div class="feature-box">
+      <div class="feature-icon">🎨</div>
+      <h4>Creative Studio</h4>
+      <p>Branding, motion graphics, content design</p>
+    </div>
+    <div class="feature-box">
+      <div class="feature-icon">⚡</div>
+      <h4>AI & Advanced Tech</h4>
+      <p>Automation, BI dashboards, data science</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIVE PILLARS -->
+<section class="pillars-section" id="services">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <span class="section-label">Core Competencies</span>
+    <h2 class="section-title">Five Pillars of Digital Excellence</h2>
+    <p class="section-desc">A complete ecosystem for digital transformation, from engineering to growth.</p>
+    
+    <div class="pillars-grid">
+      <!-- Pillar 1 -->
+      <div class="pillar-card">
+        <div class="pillar-num">1</div>
+        <h3>Digital Engineering</h3>
+        <p>Core development + technical operations. We build scalable, secure, and performant digital products.</p>
+        <ul class="service-list">
+          <li>Web & Mobile App Development</li>
+          <li>API & Backend Development</li>
+          <li>Cloud & DevOps Infrastructure</li>
+          <li>Performance Optimization</li>
+          <li>Maintenance & Support</li>
+          <li>Accessibility & Compliance</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="pillar-card">
+        <div class="pillar-num">2</div>
+        <h3>Growth Marketing & Analytics</h3>
+        <p>Customer acquisition + conversion. Integrated strategies to scale your audience and revenue.</p>
+        <ul class="service-list">
+          <li>SEO & Content Marketing</li>
+          <li>Paid Advertising (Google, Meta)</li>
+          <li>Conversion Rate Optimization</li>
+          <li>Marketing Automation</li>
+          <li>Analytics & Reporting</li>
+          <li>Local Business Growth</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="pillar-card">
+        <div class="pillar-num">3</div>
+        <h3>Creative Studio</h3>
+        <p>Design, content, branding, and media production. Beautiful, compelling creative that converts.</p>
+        <ul class="service-list">
+          <li>Logo & Brand Identity</li>
+          <li>Motion Graphics & Animation</li>
+          <li>UI/UX Design & Prototyping</li>
+          <li>Content Production</li>
+          <li>Custom Illustrations & Vectors</li>
+          <li>Ebook & Lead Magnet Design</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 4 -->
+      <div class="pillar-card">
+        <div class="pillar-num">4</div>
+        <h3>AI, Data & Advanced Tech</h3>
+        <p>Future-focused services. AI bots, dashboards, automation, and intelligence at scale.</p>
+        <ul class="service-list">
+          <li>AI Chatbots & Voice AI</li>
+          <li>Business Intelligence Dashboards</li>
+          <li>Workflow Automation Systems</li>
+          <li>Predictive Analytics</li>
+          <li>Data Warehousing & ETL</li>
+          <li>Security & Compliance</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 5 -->
+      <div class="pillar-card">
+        <div class="pillar-num">5</div>
+        <h3>Commerce & Emerging Solutions</h3>
+        <p>Modern e-commerce and innovation. Shopify, marketplaces, and next-gen technologies.</p>
+        <ul class="service-list">
+          <li>E-commerce Store Development</li>
+          <li>Checkout & Conversion Optimization</li>
+          <li>Subscription & SaaS Systems</li>
+          <li>AR/VR & Blockchain Consulting</li>
+          <li>No-Code/Low-Code Solutions</li>
+          <li>Digital Strategy Consulting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILED SERVICES -->
+<section class="detailed-services">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <span class="section-label">Comprehensive Offerings</span>
+    <h2 class="section-title">What We Actually Build</h2>
+    <p class="section-desc">Every service, every category. Pick what you need, we deliver what works.</p>
+
+    <div class="services-container">
+      <!-- Web & App Development -->
+      <div class="service-group">
+        <h4>Web & App Development</h4>
+        <ul>
+          <li>Website Development</li>
+          <li>Web App Development</li>
+          <li>Mobile App Development</li>
+          <li>UI/UX Development</li>
+          <li>CMS Development</li>
+        </ul>
+      </div>
+
+      <!-- Maintenance & Support -->
+      <div class="service-group">
+        <h4>Maintenance & Support</h4>
+        <ul>
+          <li>Security Updates</li>
+          <li>Backups & Disaster Recovery</li>
+          <li>Bug Fixes</li>
+          <li>Ongoing Maintenance</li>
+          <li>24/7 Technical Support</li>
+        </ul>
+      </div>
+
+      <!-- Performance & Optimization -->
+      <div class="service-group">
+        <h4>Performance & Optimization</h4>
+        <ul>
+          <li>Core Web Vitals Optimization</li>
+          <li>Speed Improvement</li>
+          <li>Load Testing</li>
+          <li>Performance Audits</li>
+          <li>SEO Technical Audit</li>
+        </ul>
+      </div>
+
+      <!-- Backend & Integration -->
+      <div class="service-group">
+        <h4>Backend & Integration</h4>
+        <ul>
+          <li>API Development</li>
+          <li>Third-Party Integrations</li>
+          <li>Database Design</li>
+          <li>Database Management</li>
+          <li>Microservices Architecture</li>
+        </ul>
+      </div>
+
+      <!-- Cloud, Hosting & DevOps -->
+      <div class="service-group">
+        <h4>Cloud, Hosting & DevOps</h4>
+        <ul>
+          <li>Server Setup</li>
+          <li>Cloud Migration</li>
+          <li>CI/CD Pipelines</li>
+          <li>Hosting Management</li>
+          <li>Infrastructure as Code</li>
+        </ul>
+      </div>
+
+      <!-- Accessibility & Compliance -->
+      <div class="service-group">
+        <h4>Accessibility & Compliance</h4>
+        <ul>
+          <li>WCAG Compliance</li>
+          <li>Accessibility Audits</li>
+          <li>GDPR Compliance</li>
+          <li>SOC2 Support</li>
+          <li>Security Testing</li>
+        </ul>
+      </div>
+
+      <!-- Digital Marketing -->
+      <div class="service-group">
+        <h4>Digital Marketing</h4>
+        <ul>
+          <li>SEO & Content Strategy</li>
+          <li>Social Media Marketing</li>
+          <li>Paid Advertising (Google, Meta)</li>
+          <li>Email Marketing Campaigns</li>
+          <li>Influencer Marketing</li>
+        </ul>
+      </div>
+
+      <!-- Conversion & Automation -->
+      <div class="service-group">
+        <h4>Conversion & Automation</h4>
+        <ul>
+          <li>Conversion Rate Optimization</li>
+          <li>Marketing Automation</li>
+          <li>Customer Journey Workflows</li>
+          <li>Landing Page Optimization</li>
+          <li>Lead Nurture Sequences</li>
+        </ul>
+      </div>
+
+      <!-- Analytics & Insights -->
+      <div class="service-group">
+        <h4>Analytics & Insights</h4>
+        <ul>
+          <li>Analytics Dashboards</li>
+          <li>KPI Reporting</li>
+          <li>Performance Monitoring</li>
+          <li>User Behavior Analysis</li>
+          <li>Attribution Modeling</li>
+        </ul>
+      </div>
+
+      <!-- Branding & Design -->
+      <div class="service-group">
+        <h4>Branding & Design</h4>
+        <ul>
+          <li>Logo Design</li>
+          <li>Brand Identity</li>
+          <li>Brand Guidelines</li>
+          <li>Packaging Design</li>
+          <li>Brand Illustration</li>
+        </ul>
+      </div>
+
+      <!-- Motion & Interactive Design -->
+      <div class="service-group">
+        <h4>Motion & Interactive Design</h4>
+        <ul>
+          <li>Motion Graphics</li>
+          <li>UI Animation</li>
+          <li>Lottie Animations</li>
+          <li>Interactive Prototypes</li>
+          <li>Video Editing</li>
+        </ul>
+      </div>
+
+      <!-- Content Production -->
+      <div class="service-group">
+        <h4>Content Production</h4>
+        <ul>
+          <li>Podcast Production</li>
+          <li>Infographic Design</li>
+          <li>Ebook Design</li>
+          <li>Lead Magnet Creation</li>
+          <li>Whitepaper Design</li>
+        </ul>
+      </div>
+
+      <!-- AI & Automation -->
+      <div class="service-group">
+        <h4>Artificial Intelligence</h4>
+        <ul>
+          <li>AI Chatbots & GPT Integration</li>
+          <li>Voice AI Systems</li>
+          <li>AI Assistants</li>
+          <li>Predictive Analytics</li>
+          <li>Machine Learning Models</li>
+        </ul>
+      </div>
+
+      <!-- Business Intelligence -->
+      <div class="service-group">
+        <h4>Business Intelligence</h4>
+        <ul>
+          <li>BI Dashboards (Tableau, Power BI)</li>
+          <li>ETL Pipelines</li>
+          <li>Data Warehousing</li>
+          <li>Real-time Analytics</li>
+          <li>Data Integration</li>
+        </ul>
+      </div>
+
+      <!-- Automation Systems -->
+      <div class="service-group">
+        <h4>Workflow Automation</h4>
+        <ul>
+          <li>Business Process Automation</li>
+          <li>Custom Automation Systems</li>
+          <li>Zapier & Make Workflows</li>
+          <li>RPA Solutions</li>
+          <li>Data Pipeline Automation</li>
+        </ul>
+      </div>
+
+      <!-- E-commerce Solutions -->
+      <div class="service-group">
+        <h4>E-commerce Solutions</h4>
+        <ul>
+          <li>Shopify Development</li>
+          <li>WooCommerce Development</li>
+          <li>Marketplace Integration</li>
+          <li>Headless Commerce</li>
+          <li>Custom Storefront Build</li>
+        </ul>
+      </div>
+
+      <!-- Store Optimization -->
+      <div class="service-group">
+        <h4>Store Optimization</h4>
+        <ul>
+          <li>Checkout Optimization</li>
+          <li>Cart Recovery</li>
+          <li>Shopping Feed Optimization</li>
+          <li>Conversion Rate Optimization</li>
+          <li>A/B Testing</li>
+        </ul>
+      </div>
+
+      <!-- Operations & Growth -->
+      <div class="service-group">
+        <h4>Operations & Growth</h4>
+        <ul>
+          <li>Subscription Systems</li>
+          <li>Dropshipping Automation</li>
+          <li>Commerce Analytics</li>
+          <li>Order Management</li>
+          <li>Customer Support Integration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech-section" id="tech">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <span class="section-label">Technology Stack</span>
+    <h2 class="section-title">Built With Industry-Leading Tech</h2>
+    <p class="section-desc">We use the best tools, frameworks, and platforms for each project — chosen for performance, scalability, and maintainability.</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+      <div>
+        <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:#fff;">Frontend & Mobile</h3>
+        <div class="tech-grid">
+          <div class="tech-badge">React</div>
+          <div class="tech-badge">Next.js</div>
+          <div class="tech-badge">Vue.js</div>
+          <div class="tech-badge">Angular</div>
+          <div class="tech-badge">React Native</div>
+          <div class="tech-badge">Flutter</div>
+          <div class="tech-badge">TypeScript</div>
+          <div class="tech-badge">Tailwind</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:#fff;">Backend & Cloud</h3>
+        <div class="tech-grid">
+          <div class="tech-badge">Node.js</div>
+          <div class="tech-badge">Python</div>
+          <div class="tech-badge">Django</div>
+          <div class="tech-badge">FastAPI</div>
+          <div class="tech-badge">AWS</div>
+          <div class="tech-badge">Google Cloud</div>
+          <div class="tech-badge">Docker</div>
+          <div class="tech-badge">Kubernetes</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:#fff;">Databases & APIs</h3>
+        <div class="tech-grid">
+          <div class="tech-badge">PostgreSQL</div>
+          <div class="tech-badge">MongoDB</div>
+          <div class="tech-badge">Redis</div>
+          <div class="tech-badge">GraphQL</div>
+          <div class="tech-badge">REST APIs</div>
+          <div class="tech-badge">Firebase</div>
+          <div class="tech-badge">Supabase</div>
+          <div class="tech-badge">ElasticSearch</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:#fff;">Marketing & Analytics</h3>
+        <div class="tech-grid">
+          <div class="tech-badge">Google Analytics 4</div>
+          <div class="tech-badge">Tableau</div>
+          <div class="tech-badge">Mixpanel</div>
+          <div class="tech-badge">HubSpot</div>
+          <div class="tech-badge">Shopify</div>
+          <div class="tech-badge">Stripe</div>
+          <div class="tech-badge">Zapier</div>
+          <div class="tech-badge">Make</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<div class="cta-section">
+  <h2>Ready to Transform Digitally?</h2>
+  <p>Whether you need a new website, growth strategy, or full digital transformation — we've got the expertise to deliver.</p>
+  <button class="cta-btn">Start Your Project Today</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>Anand<span>Tech</span></h3>
+      <p>Open Platform. Digital Creativity. We build end-to-end digital ecosystems — from engineering and design to growth marketing and AI.</p>
+      <div class="social-row">
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">gh</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#services">Digital Engineering</a>
+      <a href="#services">Growth Marketing</a>
+      <a href="#services">Creative Studio</a>
+      <a href="#services">AI & Advanced Tech</a>
+      <a href="#services">E-Commerce</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Documentation</a>
+      <a href="#">Case Studies</a>
+      <a href="#">Guides</a>
+      <a href="#">Community</a>
+      <a href="#">Support</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AnandTech Digital Solutions. All rights reserved.</span>
+    <span>🚀 Building the future of digital | Open Platform. Digital Creativity.</span>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for internal links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target && a.getAttribute('href') !== '#') {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
